@@ -1,0 +1,19 @@
+services:
+  jvm:
+    image: eclipse-temurin:latest
+    volumes:
+      - ./jvm/home:/home
+    ports:
+      - 8090:8080
+    depends_on:
+      - postgres
+    restart: always
+    entrypoint: /bin/bash /home/startup.sh
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: my-secret-pw
+    volumes:
+      - ./postgres/home:/home
+      - ./postgres/init.d:/docker-entrypoint-initdb.d
