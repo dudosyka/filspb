@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class UpdateEventSecondDto(
     val name:String?,
     val image:String?,
-    val imageName:String?,
+    val imageName:String? = null,
     val shortDescription:String?,
     val duration:String?,
     val description:String?,

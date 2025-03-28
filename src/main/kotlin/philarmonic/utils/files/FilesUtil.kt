@@ -20,7 +20,6 @@ object FilesUtil {
 
     fun upload(base64Encoded: String, fileName: String) {
         try {
-            Logger.debug(base64Encoded)
             val bytes = Base64.getDecoder().decode(base64Encoded)
             val path = Path("${AppConf.server.fileLocation}$fileName")
             path.writeBytes(bytes)

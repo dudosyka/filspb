@@ -1,14 +1,11 @@
 package philarmonic.modules.document.service
 
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import philarmonic.exceptions.BadRequestException
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import philarmonic.utils.kodein.KodeinService
 import org.kodein.di.DI
 import org.kodein.di.instance
-import philarmonic.modules.departmentscontacts.data.dao.DepartmentsContactsDao
-import philarmonic.modules.departmentscontacts.data.model.DepartmentsContactsModel
 import philarmonic.modules.document.data.model.DocumentModel
 import philarmonic.modules.document.data.dao.DocumentDao
 import philarmonic.modules.document.data.dto.*
@@ -61,7 +58,7 @@ class DocumentService(di: DI) : KodeinService(di) {
             val uploaded = fileService.saveFileBase64("uploads", "documents", updateDto.docName, updateDto.doc)
             dao.doc = uploaded
         }
-        dao.doc = updateDto.doc ?: dao.doc
+
         dao.visible = updateDto.visible ?: dao.visible
         dao.position = updateDto.position ?: dao.position
 

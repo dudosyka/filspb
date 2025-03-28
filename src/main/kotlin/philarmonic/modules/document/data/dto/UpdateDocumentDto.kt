@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateDocumentDto(
-    
     val name:String?,
     val doc:String?,
     val docName:String?,

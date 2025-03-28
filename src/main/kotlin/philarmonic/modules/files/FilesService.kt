@@ -11,7 +11,7 @@ class FilesService(di: DI) : KodeinService(di) {
 
         FilesUtil.upload(base64, newName)
 
-        return "/$dir/$module/$newName"
+        return newName
     }
 
     fun readFile(dir: String, module: String, fileName: String): ByteArray {
