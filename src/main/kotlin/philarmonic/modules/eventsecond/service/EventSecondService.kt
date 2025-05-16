@@ -34,7 +34,8 @@ class EventSecondService(di: DI) : KodeinService(di) {
     }
 
     fun create(createDto: CreateEventSecondDto): EventSecondDto = transaction {
-        val imageName = FilesUtil.buildName(createDto.imageName ?: throw BadRequestException("Bad filename"), fileModule)
+        val imageName = if (createDto.image == null && createDto.imageName == null) null
+        else FilesUtil.buildName(createDto.imageName ?: throw BadRequestException("Bad filename"), fileModule)
 
         val created = EventSecondDao.new {
             this.name = createDto.name
@@ -49,11 +50,12 @@ class EventSecondService(di: DI) : KodeinService(di) {
 
         setTags(created.idValue, createDto.tags)
 
-        FilesUtil.upload(with(createDto.image) {
-            if (this == null)
-                throw BadRequestException("Bad file")
-            this.split("base64,")[1]
-        } , imageName)
+        if (imageName != null)
+            FilesUtil.upload(with(createDto.image) {
+                if (this == null)
+                    throw BadRequestException("Bad file")
+                this.split("base64,")[1]
+            } , imageName)
 
         created.toOutputDto()
     }
